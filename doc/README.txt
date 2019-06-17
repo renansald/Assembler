@@ -1,0 +1,3 @@
+Para a compilação e execução da aplicação o usuário deverá acessar o terminal da máquina e navegar até a pasta que contem os códigos fonte e o arquivo makefile e entaão usar o comando make ou makefile, com isso procederá a compilação e geração do arquivo executavel assim como a ocorrera a execução do arquivo.
+Para executar o arquivo caso ele já tenha sido compilado o usuário devera pelo terminal navegar até a pasta onde se encontra o executável e o makefile e deve executar o seguinte comando make run
+Para a exclusão dos arquivos .o e do próprio executavel o usuário deverá navegar até a pasta onde os mesmos se econtram e deverá executar o comando make clen, isso apagara todos os arquivos com extensões .o e o proprio executável
