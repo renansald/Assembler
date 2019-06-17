@@ -1,0 +1,27 @@
+_MAIN: read A1
+push A1
+call _FATORIAL  
+pop A0
+write A0
+stop
+_FATORIAL: pop A2
+pop A1
+push A2
+load_c A3 1
+move A1 A0
+subtract A0 A3
+jmpz A0 _DEFAULT
+jmpn A0 _ERRO
+move A1 A0
+subtract A1 A3
+_LOOP: jmpz A1 _FINISH
+multiply A0 A1
+subtract A1 A3
+jump _LOOP
+_DEFAULT: load_c A0 1
+jump _FINISH
+_ERRO: load_c A0 -1
+_FINISH: pop A2
+push A0
+push A2
+return

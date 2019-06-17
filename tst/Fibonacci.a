@@ -1,0 +1,32 @@
+_MAIN:  read A0      ; Le o numero "n" para calcular o Fibonacci(n).
+    push A0          ; Armazena o parametro requerido pela funcao.
+    call _FIBONACCI
+    pop A0           ; Recupera o retorno da funcao armazenado na pilha.
+    write A0         ; Imprime o resultado retornado.
+    stop             ; Fim do programa.
+_FIBONACCI: pop A1   ; Armazena temporariamente o endereco de retorno.
+    pop A0           ; Recupera o parametro passado para a funcao.
+    push A1          ; Armazena novamente o endereco de retorno da funcao.
+    load_c A2 3
+    subtract A0 A2   ; Subtrai 3 do parametro passado para verificar se ele eh maior que 2.
+    jmpn A0 _DEFAULT ; Caso nao seja maior que 2, retorna o valor default. Eh verificado se ficou negativo para restringir todos os parametros menores ou iguais a 2, inclusive os numeros negativos.
+    move A0 A3       ; A0 sera o contador do loop, "i".
+    load A1 _one     ; A1 sera o Fibonnaci(n - 2).
+    load A2 _one     ; A2 sera o Fibonnaci(n - 1).
+    add A3 A1        ; Adiciona 1 ao contador, para fazer comparacao com 0, em vez de comparacao com numero negativo, como foi feito anteriormente.
+_LOOP:  jmpz A3 _FINISH ; Caso o contador tenha chegado em 0, encerra o loop.
+    load A0 _one
+    subtract A3 A0  ; Subtrai 1 do contador "i".
+    load A0 _zero   ; Zera o registrador para armazenar a soma A1 + A2.
+    add A0 A1
+    add A0 A2
+    move A2 A1      ; A1 passa a ser o Fibonnaci(n - i - 1).
+    move A0 A2      ; A2 passa a ser o Fibonnaci(n - i), sendo o resultado final quando "i" = 0.
+    jump _LOOP      ; Executa o loop novamente.
+_DEFAULT:   load A2 _one ; Resultado padrao 1 quando "n" eh menor ou igual a 2.
+_FINISH:    pop A1       ; Recupera o retorno da funcao armazenado na pilha.
+            push A2      ; Fibonnaci(n) estara armazenado em A2, entao armazena na pilha para retorno da funcao.
+            push A1      ; Armazena novamente o endereco de retorno da funcao.
+            return       ; Sai da funcao e retorna ao endereco onde foi chamada.
+_zero: .data 2 0 ; Inicializa a constante 0.
+_one: .data 2 1  ; Inicializa a constante 1.

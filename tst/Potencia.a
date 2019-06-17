@@ -1,0 +1,28 @@
+read A0
+read A1
+push A0
+push A1
+call _POTENCIA
+pop A0
+write A0
+stop
+_POTENCIA: pop A2
+pop A1
+pop A0
+push A2
+jmpn A1 _ERRO
+jmpz A1 _ONE
+move A0 A3
+load_c A2 -1
+add A1 A2
+_LOOP: jmpz A1 _FINISH
+multiply A0 A3
+add A1 A2
+jump _LOOP
+_ERRO: load_c A0 -1
+jump _FINISH
+_ONE: load_c A0 1
+_FINISH:  pop A1
+push A0
+push A1
+return
