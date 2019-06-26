@@ -4,20 +4,22 @@
 #include "Assembler.h"
 
 //Função Principal
-int main(int argc, char const *argv[]) {
+int main(int argc, char *argv[]) {
   FILE *pFile;
-  char arquivo[10000];
+  //char arquivo[10000];
   Endereco enderecos[64];
-  printf("Informe o arquivo que desejar traduzir: ");
+  /*printf("Informe o arquivo que desejar traduzir: ");
   scanf(" %[^\n]s", arquivo);
 
-  while(1){
-    pFile = fopen(arquivo, "rb");
-    if(pFile != NULL){
+  while(1){*/
+    pFile = fopen(argv[1], "rb");
+    if(pFile == NULL){
       fclose(pFile);
-      break;
+      printf("Argumento inválido saíndo do programa\n");
+      exit(0);
+      //break;
     }
-    printf("Arquivo inválido desejar informa outro arquivo? Digite s para sim e n para sair da aplicação: ");
+    /*printf("Arquivo inválido desejar informa outro arquivo? Digite s para sim e n para sair da aplicação: ");
     while(1){
       char confirmaSair;
       scanf(" %c", &confirmaSair);
@@ -34,9 +36,9 @@ int main(int argc, char const *argv[]) {
     }
     printf("Informe o arquivo que desejar traduzir: ");
     scanf(" %[^\n]s", arquivo);
-  }
-  PrimeiroPasso(arquivo, enderecos);
-  SegundoPasso(arquivo, enderecos);
+  }*/
+  PrimeiroPasso(argv[1], enderecos);
+  SegundoPasso(argv[1], enderecos);
   printf("Arquivo montado com sucesso\n");
   return 0;
 }
