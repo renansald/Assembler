@@ -1,0 +1,32 @@
+_MAIN: read A0          ; Le o primeiro numero "a" do usuario.
+    read A1             ; Le o segundo numero "b" do usuario.
+    jmpz A0 _DEFAULT    ; Caso "a" seja zero, faz o tratamento de MDC para este caso.
+    jmpz A1 _DEFAULT    ; Caso "b" seja zero, faz o tratamento de MDC para este caso.
+    load A3 _minusone   ; Carrega a constante -1 para utilizacao posterior.
+    move A1 A2          ; Carrega "b" num registrador auxiliar.
+    subtract A2 A0      ; Subtrai "a" de "b".
+    jmpn A2 _LOOP       ; Caso o resultado seja negativo, "a" eh maior que "b", nao necessitando de troca.
+    move A1 A2          ; Caso contrario, troca "b" com "a", para execucao do algoritmo.
+    move A0 A1
+    move A2 A0
+_LOOP: move A0 A2   ; Armazena "a" num registrador auxiliar.
+    divide A2 A1    ; Divide "a" por "b", obtendo um resultado inteiro, podendo ser um racional truncado.
+    multiply A2 A1  ; Multiplica o resultado por "b".
+    subtract A2 A0  ; Subtrai o resultado por "a". Caso ambos sejam iguais, entao "b" eh um divisor de "a", entao o resultado da subtracao sera 0.
+    jmpz A2 _PRINT  ; Caso "b" seja divisor de "a", encontrou o MDC e sai do loop e imprime o MDC em "b".
+    multiply A2 A3  ; Caso contrario, encontrou o oposto do resto da divisao de "a" por "b". Multiplica por -1 para fazer ser um numero positivo.
+    move A1 A0      ; Troca "a" com "b".
+    move A2 A1      ; Troca "b" pelo resto da divisao de "a" por "b".
+    jump _LOOP      ; Executa o loop novamente
+_DEFAULT: move A1 A2        ; Armazena o valor de "b" em um registrador auxiliar.
+    subtract A2 A0          ; Subtrai "a" de "b".
+    jmpn A2 _FIRSTDEFAULT   ; Se for negativo, "a" eh maior que "b" e ele sera o MDC entre os dois. 
+    jmpz A2 _ONEDEFAULT     ; Senao, indica que ambos sao zero, sendo o MDC default 1.
+    jump _PRINT             ; Se a diferenca for positiva, indica que "b" eh maior que "a", sendo ele o MDC entre os dois.
+_FIRSTDEFAULT: move A0 A1   ; Como "a", neste caso, sera maior que "b", troca os dois para impressao no registrador A1.
+    jump _PRINT             ;
+_ONEDEFAULT: load A1 _one   ; Carrega o resultado do MDC default 1 entre 0 e 0.
+_PRINT: write A1            ; Imprime o MDC calculado.
+_FINISH: stop               ; Fim do programa.
+_one: .data 2 1             ; Inicializa a constante 1.
+_minusone: .data 2 -1       ; Inicializa a constante -1.

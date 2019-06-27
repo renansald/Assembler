@@ -564,11 +564,35 @@ void BinaryToLoadC(char binario[], char binario2[], int num){
 void Data(int numBytes, int valor, int linha, char arquivo[]){
   char binario[(8*numBytes)], aux[9], auxLinha[2];
   FILE *pFile = fopen(arquivo, "a");
-  for (int  i = 8*numBytes - 1; i >= 0; i--) {
-    binario[i] = '0' + valor%2;
-    valor = valor/2;
+  if(valor < 0){
+    valor = valor *-1;
+    for (int  i = 8*numBytes - 1; i >= 0; i--) {
+      if(valor%2 == 1){
+        binario[1] = '0';
+      }
+      else{
+        binario[i] = '1';
+      }
+      valor = valor/2;
+    }
+    binario[8*numBytes] = '\0';
+    for (int  i = 8*numBytes - 1; i >= 0; i--){
+      if(binario[i] == '0'){
+        binario[i] = '1';
+        break;
+      }
+      else{
+        binario[i] = '0';
+      }
+    }
   }
-  binario[8*numBytes] = '\0';
+  else{
+    for (int  i = 8*numBytes - 1; i >= 0; i--) {
+      binario[i] = '0' + valor%2;
+      valor = valor/2;
+    }
+    binario[8*numBytes] = '\0';
+  }
   int cont = 1;
   while(cont <= numBytes){
     int a = 7;
