@@ -568,7 +568,7 @@ void Data(int numBytes, int valor, int linha, char arquivo[]){
     valor = valor *-1;
     for (int  i = 8*numBytes - 1; i >= 0; i--) {
       if(valor%2 == 1){
-        binario[1] = '0';
+        binario[i] = '0';
       }
       else{
         binario[i] = '1';
